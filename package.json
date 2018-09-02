@@ -1,0 +1,21 @@
+{
+  "name": "homesung",
+  "version": "0.1.0",
+  "description": "A Homebridge plugin for Samsung SmartTV H and J models with the pairing protocol",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "homebridge",
+    "homebridge-plugin"
+  ],
+  "author": "Krzysztof Kapitan",
+  "license": "ISC",
+  "dependencies": {
+    "@types/request": "^2.47.1",
+    "@types/ws": "^6.0.0",
+    "request": "^2.88.0",
+    "ws": "^6.0.0"
+  }
+}
