@@ -2,9 +2,10 @@ const { PairingService } = require("./service");
 const { PairingProtocol } = require("./protocol");
 
 class Pairing {
-  constructor({ config, device }) {
-    this.pairingService = new PairingService({ config, device });
+  constructor({ config }, logger) {
+    this.pairingService = new PairingService({ config });
     this.pairingProtocol = new PairingProtocol();
+    this.logger = logger;
   }
 
   async requestPin() {

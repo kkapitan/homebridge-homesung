@@ -21,9 +21,8 @@ const performRequest = async function(req, baseUrl) {
 };
 
 class PairingService {
-  constructor({ config, device }) {
+  constructor({ config }) {
     this.config = config;
-    this.device = device;
     this.baseUrl = `http://${config.ip}:8080`;
   }
 
@@ -34,8 +33,7 @@ class PairingService {
 
   async startPairing() {
     const req = StartPairingRequest({
-      config: this.config,
-      device: this.device
+      config: this.config
     });
     return await performRequest(req, this.baseUrl);
   }
@@ -43,7 +41,6 @@ class PairingService {
   async sendServerHello({ serverHello }) {
     const req = SendServerHelloRequest({
       config: this.config,
-      device: this.device,
       serverHello
     });
     return await performRequest(req, this.baseUrl);
@@ -52,7 +49,6 @@ class PairingService {
   async sendServerAck({ serverAck, requestId }) {
     const req = SendServerAckRequest({
       config: this.config,
-      device: this.device,
       requestId,
       serverAck
     });

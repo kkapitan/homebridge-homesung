@@ -1,22 +1,22 @@
-const StartPairingRequest = function({ config, device }) {
+const StartPairingRequest = function({ config }) {
   return {
     url: "/ws/pairing",
     qs: {
       step: 0,
       app_id: config.appId,
-      device_id: device.deviceId,
+      device_id: config.deviceId,
       type: 1
     }
   };
 };
 
-const SendServerHelloRequest = function({ config, device, serverHello }) {
+const SendServerHelloRequest = function({ config, serverHello }) {
   return {
     url: "/ws/pairing",
     qs: {
       step: 1,
       app_id: config.appId,
-      device_id: device.deviceId
+      device_id: config.deviceId
     },
     method: "POST",
     body: {
@@ -32,18 +32,13 @@ const SendServerHelloRequest = function({ config, device, serverHello }) {
   };
 };
 
-const SendServerAckRequest = function({
-  config,
-  device,
-  requestId,
-  serverAck
-}) {
+const SendServerAckRequest = function({ config, requestId, serverAck }) {
   return {
     url: "/ws/pairing",
     qs: {
       step: 2,
       app_id: config.appId,
-      device_id: device.deviceId
+      device_id: config.deviceId
     },
     json: true,
     method: "POST",

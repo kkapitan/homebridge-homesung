@@ -2,31 +2,31 @@ const { Pairing } = require("./pairing");
 const { Connection } = require("./connection");
 
 class Homesung {
-  constructor({ config, device }) {
-    this.pairing = new Pairing({ config, device });
-    this.connection = new Connection({ config });
+  constructor({ config }, logger = { error: console.error, log: console.log }) {
+    this.pairing = new Pairing({ config }, logger);
+    this.connection = new Connection({ config }, logger);
+    this.identity = config.identity;
+    this.logger = logger;
   }
 
   startPairing() {
     this.pairing
       .requestPin()
-      .then(() => console.log("Showing PIN code"))
-      .catch(console.error);
+      .then(() => this.logger.log("Showing PIN code"))
+      .catch(this.logger.error);
   }
 
-  confirmPairing({ pin }, callback) {
+  confirmPairing({ pin }) {
     this.pairing
       .confirmPin({ pin })
       .then(identity => {
         this.identity = identity;
-        console.log(
+        this.logger.log(
           `PIN Code confirmed ${identity.sessionId} ${identity.aesKey}`
         );
-        callback(null);
       })
       .catch(err => {
-        console.error(err);
-        callback(err);
+        this.logger.error(err);
       });
   }
 
@@ -34,10 +34,10 @@ class Homesung {
     if (this.identity !== undefined) {
       this.connection
         .sendKey({ key, identity: this.identity })
-        .then(() => console.log(`Key ${key} was sent`))
-        .catch(console.error);
+        .then(() => this.logger.log(`Key ${key} was sent`))
+        .catch(this.logger.error);
     } else {
-      console.error("You need to pair with your device first");
+      this.logger.error("You need to pair with your device first");
     }
   }
 }

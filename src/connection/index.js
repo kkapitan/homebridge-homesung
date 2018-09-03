@@ -8,9 +8,10 @@ const {
 } = require("./handlers");
 
 class Connection {
-  constructor({ config }) {
+  constructor({ config }, logger) {
     this.socketUrl = `ws://${config.ip}:8000/socket.io/1/websocket/`;
     this.socketService = new SocketService({ config });
+    this.logger = logger;
   }
 
   async connect({ identity }) {
@@ -27,23 +28,23 @@ class Connection {
           function(state, payload) {
             switch (state) {
               case SocketConnectionState.DISCONNECTED:
-                console.log("DISCONNECTED");
+                this.logger.log("DISCONNECTED");
                 this.DUID = undefined;
                 this.socketConnection = undefined;
                 break;
               case SocketConnectionState.CONNECTED:
-                console.log("CONNECTED");
+                this.logger.log("CONNECTED");
                 this.DUID = payload;
                 resolve();
                 break;
               case SocketConnectionState.CONNECTING:
-                console.log("CONNECTING");
+                this.logger.log("CONNECTING");
                 break;
               default:
-                console.log("UNKNOWN STATE");
+                this.logger.log("UNKNOWN STATE");
                 reject();
             }
-          }
+          }.bind(this)
         );
 
         this.socketConnection.register(InitialMessageHandler());

@@ -1,0 +1,57 @@
+{
+  "bridge": {
+    "name": "Homebridge",
+    "username": "CC:22:3D:E3:CE:30",
+    "port": 51826,
+    "pin": "031-45-154"
+  },
+
+  "description": "This is an example configuration file.",
+
+  "accessories": [],
+
+  "platforms": [
+    {
+      "platform": "SamsungTV",
+      "devices": [
+        {
+          "name": "TV",
+          "ip": "192.168.0.5",
+          "appId": "721b6fce-4ee6-48ba-8045-955a539edadb",
+          "userId": "654321",
+          "deviceId": "05f5e101-0064-1000-bc6f-bc148579b986",
+          "identity": {
+            "sessionId": "1",
+            "aesKey": "ff6a8ac62aa3f53bba95aec4dd42ede5"
+          },
+          "switches": [
+            { "name": "Power", "key": "KEY_POWEROFF" },
+
+            { "name": "Vol Up", "key": "KEY_VOLUP" },
+            { "name": "Vol Down", "key": "KEY_VOLDOWN" },
+            { "name": "Mute", "key": "KEY_MUTE" },
+
+            { "name": "Ch Up", "key": "KEY_CHUP" },
+            { "name": "Ch Down", "key": "KEY_CHDOWN" },
+
+            { "name": "Up", "key": "KEY_UP" },
+            { "name": "Left", "key": "KEY_LEFT" },
+            { "name": "Right", "key": "KEY_RIGHT" },
+            { "name": "Down", "key": "KEY_DOWN" },
+
+            { "name": "HDMI", "key": "KEY_HDMI" },
+            { "name": "Source", "key": "KEY_SOURCE" },
+
+            { "name": "Hub", "key": "KEY_CONTENTS" },
+            { "name": "Menu", "key": "KEY_MENU" },
+            { "name": "Tools", "key": "KEY_TOOLS" },
+            { "name": "Return", "key": "KEY_RETURN" },
+            { "name": "Exit", "key": "KEY_EXIT" },
+            { "name": "Guide", "key": "KEY_GUIDE" },
+            { "name": "Info", "key": "KEY_INFO" }
+          ]
+        }
+      ]
+    }
+  ]
+}
