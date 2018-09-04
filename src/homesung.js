@@ -1,5 +1,6 @@
 const { Pairing } = require("./pairing");
 const { Connection } = require("./connection");
+const { InfoService } = require("./info");
 
 class Homesung {
   constructor({ config }, logger = { error: console.error, log: console.log }) {
@@ -7,37 +8,44 @@ class Homesung {
     this.connection = new Connection({ config }, logger);
     this.identity = config.identity;
     this.logger = logger;
+    this.infoService = new InfoService({ config });
   }
 
-  startPairing() {
-    this.pairing
-      .requestPin()
-      .then(() => this.logger.log("Showing PIN code"))
-      .catch(this.logger.error);
+  async deviceInfo() {
+    try {
+      return await this.infoService.fetchInfo();
+    } catch (error) {
+      throw new Error("TV is not responding");
+    }
   }
 
-  confirmPairing({ pin }) {
-    this.pairing
-      .confirmPin({ pin })
-      .then(identity => {
-        this.identity = identity;
-        this.logger.log(
-          `PIN Code confirmed ${identity.sessionId} ${identity.aesKey}`
-        );
-      })
-      .catch(err => {
-        this.logger.error(err);
-      });
+  async startPairing() {
+    try {
+      await this.pairing.requestPin();
+    } catch (error) {
+      throw new Error("Unable to request PIN");
+    }
   }
 
-  sendKey({ key }) {
-    if (this.identity !== undefined) {
-      this.connection
-        .sendKey({ key, identity: this.identity })
-        .then(() => this.logger.log(`Key ${key} was sent`))
-        .catch(this.logger.error);
-    } else {
-      this.logger.error("You need to pair with your device first");
+  async confirmPairing({ pin }) {
+    try {
+      const identity = await this.pairing.confirmPin({ pin });
+      this.identity = identity;
+      return identity;
+    } catch (error) {
+      throw new Error("Invalid PIN code");
+    }
+  }
+
+  async sendKey({ key }) {
+    try {
+      if (this.identity !== undefined) {
+        await this.connection.sendKey({ key, identity: this.identity });
+      } else {
+        throw new Error("You need to pair with your device first");
+      }
+    } catch (error) {
+      throw new Error("Unable to send the key");
     }
   }
 }

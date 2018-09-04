@@ -12,7 +12,23 @@ const config = {
 const homesung = new Homesung({ config });
 
 if (args[0]) {
-  homesung.confirmPairing({ pin: args[0] });
+  homesung
+    .confirmPairing({ pin: args[0] })
+    .then(identity => {
+      console.log(
+        `PIN Code confirmed ${identity.sessionId} ${identity.aesKey}`
+      );
+    })
+    .catch(err => {
+      console.error(err);
+    });
 } else {
-  homesung.startPairing();
+  // homesung
+  //   .startPairing()
+  //   .then(() => console.log("Showing PIN code"))
+  //   .catch(console.error);
+  homesung
+    .deviceInfo()
+    .then(console.log)
+    .catch(console.error);
 }

@@ -25,30 +25,54 @@
             "aesKey": "ff6a8ac62aa3f53bba95aec4dd42ede5"
           },
           "switches": [
-            { "name": "Power", "key": "KEY_POWEROFF" },
+            { "name": "Power", "command": "KEY_POWEROFF" },
 
-            { "name": "Vol Up", "key": "KEY_VOLUP" },
-            { "name": "Vol Down", "key": "KEY_VOLDOWN" },
-            { "name": "Mute", "key": "KEY_MUTE" },
+            { "name": "Vol Up", "command": "KEY_VOLUP" },
+            { "name": "Vol Down", "command": "KEY_VOLDOWN" },
+            { "name": "Vol Down 5", "command": "5*KEY_VOLDOWN" },
+            { "name": "Vol Up 5", "command": "5*KEY_VOLUP" },
+            { "name": "Vol Down 10", "command": "10*KEY_VOLDOWN" },
+            { "name": "Vol Up 10", "command": "10*KEY_VOLUP" },
+            { "name": "Mute", "command": "KEY_MUTE" },
 
-            { "name": "Ch Up", "key": "KEY_CHUP" },
-            { "name": "Ch Down", "key": "KEY_CHDOWN" },
+            { "name": "Ch Up", "command": "KEY_CHUP" },
+            { "name": "Ch Down", "command": "KEY_CHDOWN" },
 
-            { "name": "Up", "key": "KEY_UP" },
-            { "name": "Left", "key": "KEY_LEFT" },
-            { "name": "Right", "key": "KEY_RIGHT" },
-            { "name": "Down", "key": "KEY_DOWN" },
+            { "name": "Up", "command": "KEY_UP" },
+            { "name": "Left", "command": "KEY_LEFT" },
+            { "name": "Right", "command": "KEY_RIGHT" },
+            { "name": "Down", "command": "KEY_DOWN" },
 
-            { "name": "HDMI", "key": "KEY_HDMI" },
-            { "name": "Source", "key": "KEY_SOURCE" },
+            { "name": "HDMI", "command": "KEY_HDMI" },
+            { "name": "Source", "command": "KEY_SOURCE" },
 
-            { "name": "Hub", "key": "KEY_CONTENTS" },
-            { "name": "Menu", "key": "KEY_MENU" },
-            { "name": "Tools", "key": "KEY_TOOLS" },
-            { "name": "Return", "key": "KEY_RETURN" },
-            { "name": "Exit", "key": "KEY_EXIT" },
-            { "name": "Guide", "key": "KEY_GUIDE" },
-            { "name": "Info", "key": "KEY_INFO" }
+            { "name": "Hub", "command": "KEY_CONTENTS" },
+            { "name": "Menu", "command": "KEY_MENU" },
+            { "name": "Tools", "command": "KEY_TOOLS" },
+            { "name": "Return", "command": "KEY_RETURN" },
+            { "name": "Exit", "command": "KEY_EXIT" },
+            { "name": "Guide", "command": "KEY_GUIDE" },
+            { "name": "Info", "command": "KEY_INFO" },
+
+            { "name": "Channel 1", "command": "KEY_1" },
+            { "name": "Channel 2", "command": "KEY_2" },
+            { "name": "Channel 3", "command": "KEY_3" },
+            { "name": "Channel 4", "command": "KEY_4" },
+            { "name": "Channel 5", "command": "KEY_5" },
+            { "name": "Channel 6", "command": "KEY_6" },
+            { "name": "Channel 7", "command": "KEY_7" },
+            { "name": "Channel 8", "command": "KEY_8" },
+            { "name": "Channel 9", "command": "KEY_9" },
+            { "name": "Channel 10", "command": ["KEY_1", "KEY_0"] },
+            { "name": "Channel 11", "command": ["KEY_1", "KEY_1"] },
+            { "name": "Channel 12", "command": ["KEY_1", "KEY_2"] },
+            { "name": "Channel 13", "command": ["KEY_1", "KEY_3"] },
+            { "name": "Channel 14", "command": ["KEY_1", "KEY_4"] },
+            { "name": "Channel 15", "command": ["KEY_1", "KEY_5"] },
+            { "name": "Channel 16", "command": ["KEY_1", "KEY_6"] },
+            { "name": "Channel 17", "command": ["KEY_1", "KEY_7"] },
+            { "name": "Channel 18", "command": ["KEY_1", "KEY_8"] },
+            { "name": "Channel 19", "command": ["KEY_1", "KEY_9"] }
           ]
         }
       ]
