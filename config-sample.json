@@ -21,8 +21,8 @@
           "userId": "654321",
           "deviceId": "05f5e101-0064-1000-bc6f-bc148579b986",
           "identity": {
-            "sessionId": "1",
-            "aesKey": "ff6a8ac62aa3f53bba95aec4dd42ede5"
+            "sessionId": "4",
+            "aesKey": "e43648d74db9704464fd795cdc764695"
           },
           "switches": [
             { "name": "Power", "command": "KEY_POWEROFF" },

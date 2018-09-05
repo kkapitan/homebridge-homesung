@@ -11,6 +11,15 @@ class Homesung {
     this.infoService = new InfoService({ config });
   }
 
+  async isTurnedOn() {
+    try {
+      await this.deviceInfo();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async deviceInfo() {
     try {
       return await this.infoService.fetchInfo();

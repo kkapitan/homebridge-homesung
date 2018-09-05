@@ -1,6 +1,7 @@
 const InfoRequest = function() {
   return {
-    url: "/ms/1.0/"
+    url: "/ms/1.0/",
+    timeout: 5000
   };
 };
 

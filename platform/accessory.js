@@ -58,7 +58,7 @@ module.exports = class SamsungAccessory {
         () =>
           this.service
             .getCharacteristic(this.hap.Characteristic.On)
-            .updateValue(!value),
+            .updateValue(false),
         100
       );
     } catch (error) {
@@ -68,7 +68,7 @@ module.exports = class SamsungAccessory {
         () =>
           this.service
             .getCharacteristic(this.hap.Characteristic.On)
-            .updateValue(!value),
+            .updateValue(false),
         100
       );
     } finally {
@@ -78,8 +78,7 @@ module.exports = class SamsungAccessory {
 
   async _getPower(callback) {
     try {
-      await this.remote.deviceInfo();
-      callback(null, true);
+      callback(null, await this.remote.isTurnedOn());
     } catch (error) {
       this.log(`TV is powered off: ${error}`);
       callback(null, false);
@@ -88,7 +87,7 @@ module.exports = class SamsungAccessory {
 
   async _setPower(value, callback) {
     try {
-      if (!value) {
+      if (await this.remote.isTurnedOn()) {
         await this.remote.sendKey({ key: this.command });
       }
     } catch (error) {
