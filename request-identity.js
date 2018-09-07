@@ -1,13 +1,6 @@
 const { Homesung } = require("./src/homesung");
 const readline = require("readline");
 
-const args = process.argv.slice(2);
-
-if (args.length == 0) {
-  console.error("IP address is required");
-  return;
-}
-
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -22,6 +15,13 @@ async function input(prompt) {
 }
 
 async function main() {
+  const args = process.argv.slice(2);
+
+  if (args.length == 0) {
+    console.error("IP address is required");
+    return;
+  }
+
   const config = {
     ip: args[0],
     appId: "721b6fce-4ee6-48ba-8045-955a539edadb",
@@ -58,9 +58,11 @@ async function main() {
   }
 }
 
-main()
-  .then(() => process.exit())
-  .catch(err => {
-    console.error(err.message);
-    process.exit();
-  });
+module.exports = function() {
+  main()
+    .then(() => process.exit())
+    .catch(err => {
+      console.error(err.message);
+      process.exit();
+    });
+};
