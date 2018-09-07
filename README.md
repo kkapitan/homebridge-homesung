@@ -48,7 +48,7 @@ This plugin was made because the available ones offer the support for only the n
 
 ## Pairing
 
-In order to obtain configuration info such as `identity` or `deviceId` turn on the TV and run `homebridge-homesung pair <ip of the device>` from terminal.
+In order to obtain configuration info such as `identity` or `deviceId` turn on the TV and run `homesung-pair <ip of the device>` from terminal.
 The pairing code should be displayed on the TV screen. After typing the correct pin code in the terminal, all the required info should be printed.
 
 If the tool reports that it couldn't establish the connection right after the TV was turned on, try waiting a couple of minutes till the networking interface of the device will be ready to accept http calls.
