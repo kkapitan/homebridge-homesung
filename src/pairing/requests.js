@@ -19,13 +19,12 @@ const SendServerHelloRequest = function({ config, serverHello }) {
       device_id: config.deviceId
     },
     method: "POST",
-    body: {
+    body: JSON.stringify({
       auth_Data: {
         auth_type: "SPC",
         GeneratorServerHello: serverHello
       }
-    },
-    json: true,
+    }),
     headers: {
       "Content-Type": "application/json"
     }
@@ -40,15 +39,14 @@ const SendServerAckRequest = function({ config, requestId, serverAck }) {
       app_id: config.appId,
       device_id: config.deviceId
     },
-    json: true,
     method: "POST",
-    body: {
+    body: JSON.stringify({
       auth_Data: {
         auth_type: "SPC",
         request_id: requestId,
         ServerAckMsg: serverAck
       }
-    },
+    }),
     headers: {
       "Content-Type": "application/json"
     }

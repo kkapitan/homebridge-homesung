@@ -29,21 +29,13 @@ class Homesung {
   }
 
   async startPairing() {
-    try {
-      await this.pairing.requestPin();
-    } catch (error) {
-      throw new Error("Unable to request PIN");
-    }
+    await this.pairing.requestPin();
   }
 
   async confirmPairing({ pin }) {
-    try {
-      const identity = await this.pairing.confirmPin({ pin });
-      this.identity = identity;
-      return identity;
-    } catch (error) {
-      throw new Error("Invalid PIN code");
-    }
+    const identity = await this.pairing.confirmPin({ pin });
+    this.identity = identity;
+    return identity;
   }
 
   async sendKey({ key }) {
@@ -54,7 +46,7 @@ class Homesung {
         throw new Error("You need to pair with your device first");
       }
     } catch (error) {
-      throw new Error("Unable to send the key");
+      throw new Error(`Unable to send the key: ${error.message}`);
     }
   }
 }

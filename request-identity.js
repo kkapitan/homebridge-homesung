@@ -54,7 +54,7 @@ async function main() {
     console.log(`Identity: ${JSON.stringify(identity)}`);
     console.log(`DeviceId: ${config.deviceId}`);
   } catch (error) {
-    throw new Error("Incorrect PIN was supplied.");
+    throw new Error(`Unable to pair: ${error.message}`);
   }
 }
 

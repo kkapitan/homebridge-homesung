@@ -6,8 +6,6 @@
     "pin": "031-45-154"
   },
 
-  "description": "This is an example configuration file.",
-
   "accessories": [],
 
   "platforms": [
@@ -21,8 +19,8 @@
           "userId": "654321",
           "deviceId": "05f5e101-0064-1000-bc6f-bc148579b986",
           "identity": {
-            "sessionId": "4",
-            "aesKey": "e43648d74db9704464fd795cdc764695"
+            "sessionId": "7",
+            "aesKey": "c91a6ae22a01f6b91a4a1f660a7b9a39"
           },
           "switches": [
             { "name": "Power", "command": "KEY_POWEROFF" },
