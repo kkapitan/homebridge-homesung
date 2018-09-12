@@ -1,23 +1,16 @@
 const StartPairingRequest = function({ config }) {
   return {
-    url: "/ws/pairing",
-    qs: {
-      step: 0,
-      app_id: config.appId,
-      device_id: config.deviceId,
-      type: 1
-    }
+    url: `/ws/pairing?step=0&app_id=${config.appId}&device_id=${
+      config.deviceId
+    }&type=1`
   };
 };
 
 const SendServerHelloRequest = function({ config, serverHello }) {
   return {
-    url: "/ws/pairing",
-    qs: {
-      step: 1,
-      app_id: config.appId,
-      device_id: config.deviceId
-    },
+    url: `/ws/pairing?step=1&app_id=${config.appId}&device_id=${
+      config.deviceId
+    }`,
     method: "POST",
     body: JSON.stringify({
       auth_Data: {
@@ -33,12 +26,9 @@ const SendServerHelloRequest = function({ config, serverHello }) {
 
 const SendServerAckRequest = function({ config, requestId, serverAck }) {
   return {
-    url: "/ws/pairing",
-    qs: {
-      step: 2,
-      app_id: config.appId,
-      device_id: config.deviceId
-    },
+    url: `/ws/pairing?step=2&app_id=${config.appId}&device_id=${
+      config.deviceId
+    }`,
     method: "POST",
     body: JSON.stringify({
       auth_Data: {

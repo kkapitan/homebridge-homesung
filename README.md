@@ -28,7 +28,6 @@ This plugin was made because the available ones offer the support for only the n
         {
           "name": "<name of the device>",
           "ip": "<ip of the device>",
-          "deviceId": "<id of the device - obtained after pairing>",
           "identity": {
             "sessionId": "<id of the pairing session - obtained after pairing>",
             "aesKey": "<key of the pairing session - obtained after pairing>"
@@ -48,7 +47,7 @@ This plugin was made because the available ones offer the support for only the n
 
 ## Pairing
 
-In order to obtain configuration info such as `identity` or `deviceId` turn on the TV and run `homesung-pair <ip of the device>` from terminal.
+In order to obtain configuration info such as `identity` turn on the TV and run `homesung-pair <ip of the device>` from terminal.
 The pairing code should be displayed on the TV screen. After typing the correct pin code in the terminal, all the required info should be printed.
 
 If the tool reports that it couldn't establish the connection right after the TV was turned on, try waiting a couple of minutes till the networking interface of the device will be ready to accept http calls.
@@ -62,7 +61,6 @@ If the tool reports that it couldn't establish the connection right after the TV
 | name     | Name of the device in HomeKit.                            |
 | ip       | The IP address of the device.                             |
 | identity | Pairing session id and key used to encrypt communication. |
-| deviceId | id of the device.                                         |
 
 ## Switch settings
 

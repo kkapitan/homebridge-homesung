@@ -1,7 +1,7 @@
 {
   "bridge": {
     "name": "Homebridge",
-    "username": "CC:22:3D:E3:CE:30",
+    "username": "CC:22:3D:E3:CE:31",
     "port": 51826,
     "pin": "031-45-154"
   },
@@ -17,10 +17,9 @@
           "ip": "192.168.0.5",
           "appId": "721b6fce-4ee6-48ba-8045-955a539edadb",
           "userId": "654321",
-          "deviceId": "05f5e101-0064-1000-bc6f-bc148579b986",
           "identity": {
-            "sessionId": "7",
-            "aesKey": "c91a6ae22a01f6b91a4a1f660a7b9a39"
+            "sessionId": "5",
+            "aesKey": "bc0e43b580deb033f4d00e502d84f2ed"
           },
           "switches": [
             { "name": "Power", "command": "KEY_POWEROFF" },

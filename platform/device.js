@@ -3,11 +3,8 @@ let SamsungAccessory = require("./accessory");
 
 module.exports = class SamsungDevice {
   constructor(log, hap, config) {
-    if (!config.ip)
+    if (!config.ip) {
       throw new Error(`TV IP address is required for ${config["name"]}`);
-
-    if (!config.deviceId) {
-      throw new Error(`TV deviceId is required for ${config["name"]}`);
     }
 
     if (!config.identity) {
@@ -39,8 +36,6 @@ module.exports = class SamsungDevice {
 
     if (Array.isArray(this.config["switches"])) {
       for (let element of this.config["switches"]) {
-        // element.name = `${element.name} ${this.config["name"]}`;
-
         this.accessories.push(
           new SamsungAccessory(
             { ...this, config: { ...this.config, ...element } },
