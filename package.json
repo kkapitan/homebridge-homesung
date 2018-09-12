@@ -1,6 +1,6 @@
 {
   "name": "homebridge-homesung",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A Homebridge plugin for Samsung SmartTV H and J models with the pairing protocol",
   "main": "index.js",
   "scripts": {
