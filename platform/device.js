@@ -27,7 +27,14 @@ module.exports = class SamsungDevice {
     this.accessories = [];
     this.config = config;
 
-    this.remote = new Homesung({ config }, { log: log, error: log });
+    const debugLog = function(message) {
+      config["debug"] === true && log(message);
+    };
+
+    this.remote = new Homesung(
+      { config },
+      { log: log, error: log, debug: debugLog }
+    );
     this.initAccessories();
   }
 

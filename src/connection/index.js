@@ -47,9 +47,9 @@ class Connection {
           }.bind(this)
         );
 
-        this.socketConnection.register(InitialMessageHandler());
-        this.socketConnection.register(KeepAliveMessageHandler());
-        this.socketConnection.register(CommandsMessageHandler());
+        this.socketConnection.register(InitialMessageHandler(this.logger));
+        this.socketConnection.register(KeepAliveMessageHandler(this.logger));
+        this.socketConnection.register(CommandsMessageHandler(this.logger));
 
         this.socketConnection.connect();
       }.bind(this)

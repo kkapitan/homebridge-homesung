@@ -3,7 +3,10 @@ const { Connection } = require("./connection");
 const { InfoService } = require("./info");
 
 class Homesung {
-  constructor({ config }, logger = { error: console.error, log: console.log }) {
+  constructor(
+    { config },
+    logger = { error: console.error, log: console.log, debug: console.log }
+  ) {
     this.pairing = new Pairing({ config }, logger);
     this.connection = new Connection({ config }, logger);
     this.identity = config.identity;
@@ -16,6 +19,7 @@ class Homesung {
       await this.deviceInfo();
       return true;
     } catch (error) {
+      this.logger.error(`Unable to connect to the TV: ${error.message}`);
       return false;
     }
   }
@@ -24,7 +28,7 @@ class Homesung {
     try {
       return await this.infoService.fetchInfo();
     } catch (error) {
-      throw new Error("TV is not responding");
+      throw new Error(`Error fetching device info ${error.message}`);
     }
   }
 

@@ -1,7 +1,7 @@
 {
   "bridge": {
     "name": "Homebridge",
-    "username": "CC:22:3D:E3:CE:31",
+    "username": "CC:22:3D:E3:CE:32",
     "port": 51826,
     "pin": "031-45-154"
   },
@@ -14,9 +14,10 @@
       "devices": [
         {
           "name": "TV",
-          "ip": "192.168.0.5",
+          "ip": "192.168.0.4",
           "appId": "721b6fce-4ee6-48ba-8045-955a539edadb",
           "userId": "654321",
+          "debug": true,
           "identity": {
             "sessionId": "5",
             "aesKey": "bc0e43b580deb033f4d00e502d84f2ed"

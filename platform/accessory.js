@@ -78,7 +78,9 @@ module.exports = class SamsungAccessory {
 
   async _getPower(callback) {
     try {
-      callback(null, await this.remote.isTurnedOn());
+      const isOn = await this.remote.isTurnedOn();
+      this.log(`TV is on: ${isOn}`);
+      callback(null, isOn);
     } catch (error) {
       this.log(`TV is powered off: ${error}`);
       callback(null, false);
