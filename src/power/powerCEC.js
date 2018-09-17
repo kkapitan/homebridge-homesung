@@ -22,6 +22,10 @@ class PowerCEC {
         "REPORT_POWER_STATUS"
       );
 
+      this.logger.debug(`Response: ${response}`);
+      this.logger.debug(`Response: ${JSON.stringify(response)}`);
+      this.logger.debug(`Response: ${response.status}`);
+
       const status = response.status ? PowerStatus.ON : PowerStatus.STANDBY;
       this.logger.debug(`Requesting device status succeded: ${status}`);
 
@@ -47,7 +51,9 @@ class PowerCEC {
     this.cecClient.on(
       "REPORT_POWER_STATUS",
       function(status) {
-        this.logger.debug(`New status arrived: ${status}`);
+        this.logger.debug(
+          `New status arrived: ${status.source}, ${status.args[0]}`
+        );
         if (status.source === this.controlNibble) {
           const newStatus = (function() {
             switch (status.args[0]) {
