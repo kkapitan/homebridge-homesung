@@ -6,11 +6,13 @@ module.exports = class SamsungAccessory {
     this.hap = device.hap;
     this.config = device.config;
 
+    this.delay = device.config["delay"] || 500;
+
     this.remote = device.remote;
     this.name = device.config.name;
 
-    this.command = device.config.command;
-    this.keySequence = CommandParser(this.command);
+    this.originalCommand = device.config.command;
+    this.command = CommandParser(device.config.command);
 
     this.service = new this.hap.Service.Switch(this.name);
 
@@ -47,11 +49,11 @@ module.exports = class SamsungAccessory {
 
   async _setSwitch(value, callback) {
     try {
-      await this.remote.sendKey({ key: this.keySequence[0] });
-      const remainingKeys = this.keySequence.slice(1);
-      for (const key of remainingKeys) {
-        await this._delay(500);
-        await this.remote.sendKey({ key: key });
+      for (const step of this.command) {
+        const delay = this.step.delay || this.delay;
+
+        await this.remote.sendKey({ key: step.key });
+        await this._wait(delay);
       }
 
       setTimeout(
@@ -99,13 +101,20 @@ module.exports = class SamsungAccessory {
     }
   }
 
-  _delay(ms) {
+  _wait(ms) {
     return new Promise(resolve => {
-      setTimeout(resolve, ms);
+      if (ms <= 0) {
+        resolve();
+      } else {
+        setTimeout(resolve, ms);
+      }
     });
   }
 
   isPowerCommand() {
-    return this.command === "KEY_POWEROFF";
+    return (
+      this.originalCommand === "KEY_POWEROFF" ||
+      this.originalCommand === "KEY_POWER"
+    );
   }
 };
