@@ -108,10 +108,11 @@ The command can be:
 - a key with the multiplier e.g. `5 * KEY_VOLUP` to imitate the key being pressed multiple times.
 - an array of the above e.g. `[KEY_VOLUP, 5 * KEY_VOLDOWN]` to imitate the sequence of key presses.
 - an object or an array of objects with the following properties:
-  | Name | Description |
-  | :------ | :------------------------------------------------------------------------- |
-  | keys | A single key with or without a multiplier, or an array of such. |
-  | delay (optional) | Time (in miliseconds) to wait **after** sending **each** of the keys associated with the command to the TV. The default value is 500 ms. This option will override the one set as a switch setting.|
+
+| Name             | Description                                                                                                                                                                                         |
+| :--------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| keys             | A single key with or without a multiplier, or an array of such.                                                                                                                                     |
+| delay (optional) | Time (in miliseconds) to wait **after** sending **each** of the keys associated with the command to the TV. The default value is 500 ms. This option will override the one set as a switch setting. |
 
 See the `config-sample.json` for examples.
 
