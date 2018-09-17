@@ -54,7 +54,7 @@ class PowerCEC {
         this.logger.debug(
           `New status arrived: ${status.source}, ${status.args[0]}`
         );
-        if (status.source === this.controlNibble) {
+        if (Number(status.source) === this.controlNibble) {
           const newStatus = (function() {
             switch (status.args[0]) {
               case this.cecClient.code.PowerStatus.ON:
