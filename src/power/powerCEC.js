@@ -22,11 +22,7 @@ class PowerCEC {
         "REPORT_POWER_STATUS"
       );
 
-      this.logger.debug(`Response: ${response}`);
-      this.logger.debug(`Response: ${JSON.stringify(response)}`);
-      this.logger.debug(`Response: ${response.status}`);
-
-      const status = response.status ? PowerStatus.ON : PowerStatus.STANDBY;
+      const status = response.status ? PowerStatus.STANDBY : PowerStatus.ON;
       this.logger.debug(`Requesting device status succeded: ${status}`);
 
       return status;
