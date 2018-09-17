@@ -1,6 +1,7 @@
 const { Pairing } = require("./pairing");
 const { Connection } = require("./connection");
 const { InfoService } = require("./info");
+const { PowerCEC, PowerWiFi, PowerStatus } = require("./power");
 
 class Homesung {
   constructor(
@@ -9,19 +10,39 @@ class Homesung {
   ) {
     this.pairing = new Pairing({ config }, logger);
     this.connection = new Connection({ config }, logger);
+
     this.identity = config.identity;
     this.logger = logger;
     this.infoService = new InfoService({ config });
+
+    config.power = {
+      enableCEC: false,
+      key: "KEY_POWEROFF",
+      addressCEC: 0,
+      ...config.power
+    };
+
+    if (config.power.enableCEC === true) {
+      this.power = new PowerCEC({ config }, logger);
+    } else {
+      this.power = new PowerWiFi(
+        {
+          config,
+          infoService: this.infoService,
+          keySender: this.sendKey.bind(this)
+        },
+        logger
+      );
+    }
   }
 
   async isTurnedOn() {
-    try {
-      await this.deviceInfo();
-      return true;
-    } catch (error) {
-      this.logger.error(`Unable to connect to the TV: ${error.message}`);
-      return false;
-    }
+    return await this.power.isTurnedOn();
+  }
+
+  async setPowerStatus({ status }) {
+    const newStatus = status ? PowerStatus.ON : PowerStatus.STANDBY;
+    await this.power.setPowerStatus({ status: newStatus });
   }
 
   async deviceInfo() {

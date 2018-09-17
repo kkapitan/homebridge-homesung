@@ -32,8 +32,12 @@ This plugin was made because the available ones offer the support for only the n
             "sessionId": "<id of the pairing session - obtained after pairing>",
             "aesKey": "<key of the pairing session - obtained after pairing>"
           },
+          "power": {
+            "name": "<name of the power switch>",
+            "key": "<key to use in order to power off the TV if hdmi-cec is disabled>",
+            "enableCEC": "<whether to use hdmi-cec as a power on/off method>",
+          }
           "switches": [
-            { "name": "Power", "command": "KEY_POWEROFF" },
             { "name": "Vol Down 5", "delay": 1000, "command": "5*KEY_VOLDOWN" },
             { "name": "Channel 12", "command": ["KEY_1", "KEY_2"] },
             { "name": "Play with sound", "command": ["5*KEY_VOLDOWN", "5*KEY_VOLUP"] },
@@ -69,12 +73,22 @@ If the tool reports that it couldn't establish the connection right after the TV
 
 ## Device settings
 
-| Name             | Description                                                                                     |
-| :--------------- | :---------------------------------------------------------------------------------------------- |
-| name             | Name of the device in HomeKit.                                                                  |
-| ip               | The IP address of the device.                                                                   |
-| identity         | Pairing session id and key used to encrypt communication.                                       |
-| debug (optional) | If set to true, additional connection info will appear in the logs. The default value is false. |
+| Name             | Description                                                                                               |
+| :--------------- | :-------------------------------------------------------------------------------------------------------- |
+| name             | Name of the device in HomeKit.                                                                            |
+| ip               | The IP address of the device.                                                                             |
+| identity         | Pairing session id and key used to encrypt communication.                                                 |
+| power (optional) | Power object that specifies the behaviour of powering on/off the TV. See [power](#Power) for a reference. |
+| debug (optional) | If set to true, additional connection info will appear in the logs. The default value is false.           |
+
+### Power
+
+| Name       | Description                                                                                          |
+| :--------- | :--------------------------------------------------------------------------------------------------- |
+| name       | Name of the power switch in HomeKit. The default value is "Power TV".                                |
+| enableCEC  | Whether to use hdmi-cec as a way to power off/on the device. The default value is false.             |
+| key        | The key to be sent as a power off if hdmi-cec is disabled. The default value is KEY_POWEROFF.        |
+| addressCEC | The hdmi-cec address of the device. The default value is 0 which should work with most of the cases. |
 
 ## Switch settings
 

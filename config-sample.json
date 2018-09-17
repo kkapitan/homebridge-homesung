@@ -22,9 +22,11 @@
             "sessionId": "5",
             "aesKey": "bc0e43b580deb033f4d00e502d84f2ed"
           },
+          "power": {
+            "key": "KEY_POWEROFF",
+            "enableCEC": false
+          },
           "switches": [
-            { "name": "Power", "command": "KEY_POWEROFF" },
-
             { "name": "Vol Up", "command": "KEY_VOLUP" },
             { "name": "Vol Down", "command": "KEY_VOLDOWN" },
             { "name": "Mute", "command": "KEY_MUTE" },

@@ -39,15 +39,20 @@ module.exports = class SamsungDevice {
   }
 
   initAccessories() {
-    this.accessories = [];
+    this.accessories = [
+      new SamsungAccessory({
+        ...this,
+        config: { ...this.config, isPowerCommand: true }
+      })
+    ];
 
     if (Array.isArray(this.config["switches"])) {
-      for (let element of this.config["switches"]) {
+      for (const element of this.config["switches"]) {
         this.accessories.push(
-          new SamsungAccessory(
-            { ...this, config: { ...this.config, ...element } },
-            "switch"
-          )
+          new SamsungAccessory({
+            ...this,
+            config: { ...this.config, ...element }
+          })
         );
       }
     }
