@@ -54,20 +54,20 @@ If the tool reports that it couldn't establish the connection right after the TV
 
 ## Device settings
 
-**All settings are required**
-
-| Name     | Description                                               |
-| :------- | :-------------------------------------------------------- |
-| name     | Name of the device in HomeKit.                            |
-| ip       | The IP address of the device.                             |
-| identity | Pairing session id and key used to encrypt communication. |
+| Name             | Description                                                                                     |
+| :--------------- | :---------------------------------------------------------------------------------------------- |
+| name             | Name of the device in HomeKit.                                                                  |
+| ip               | The IP address of the device.                                                                   |
+| identity         | Pairing session id and key used to encrypt communication.                                       |
+| debug (optional) | If set to true, additional connection info will appear in the logs. The default value is false. |
 
 ## Switch settings
 
-| Name    | Description                                                                |
-| :------ | :------------------------------------------------------------------------- |
-| name    | Name of the switch in HomeKit.                                             |
-| command | Command to be sent to TV. See [commands](#Commands) as a syntax reference. |
+| Name             | Description                                                                                                  |
+| :--------------- | :----------------------------------------------------------------------------------------------------------- |
+| name             | Name of the switch in HomeKit.                                                                               |
+| command          | Command to be sent to TV. See [commands](#Commands) as a syntax reference.                                   |
+| delay (optional) | Time (in miliseconds) to wait **after** sending **each** of the keys to the TV. The default value is 500 ms. |
 
 ### Commands
 
@@ -76,6 +76,11 @@ The command can be:
 - a single key e.g. `KEY_VOLUP` to imitate a key press.
 - a key with the multiplier e.g. `5 * KEY_VOLUP` to imitate the key being pressed multiple times.
 - an array of the above e.g. `[KEY_VOLUP, 5 * KEY_VOLDOWN]` to imitate the sequence of key presses.
+- an object or an array of objects with the following properties:
+  | Name | Description |
+  | :------ | :------------------------------------------------------------------------- |
+  | keys | A single key with or without a multiplier, or an array of such. |
+  | delay (optional) | Time (in miliseconds) to wait **after** sending **each** of the keys associated with the command to the TV. The default value is 500 ms. This option will override the one set as a switch setting.|
 
 ## Known limitations
 
