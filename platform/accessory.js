@@ -50,7 +50,7 @@ module.exports = class SamsungAccessory {
   async _setSwitch(value, callback) {
     try {
       for (const step of this.command) {
-        const delay = this.step.delay || this.delay;
+        const delay = step.delay || this.delay;
 
         await this.remote.sendKey({ key: step.key });
         await this._wait(delay);
@@ -92,7 +92,7 @@ module.exports = class SamsungAccessory {
   async _setPower(value, callback) {
     try {
       if (await this.remote.isTurnedOn()) {
-        await this.remote.sendKey({ key: this.command });
+        await this.remote.sendKey({ key: this.originalCommand });
       }
     } catch (error) {
       this.log(`Error powering off: ${error}`);

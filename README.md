@@ -34,9 +34,24 @@ This plugin was made because the available ones offer the support for only the n
           },
           "switches": [
             { "name": "Power", "command": "KEY_POWEROFF" },
-            { "name": "Vol Down 5", "command": "5*KEY_VOLDOWN" },
+            { "name": "Vol Down 5", "delay": 1000, "command": "5*KEY_VOLDOWN" },
             { "name": "Channel 12", "command": ["KEY_1", "KEY_2"] },
-            { "name": "Play with sound", "command": ["5*KEY_VOLDOWN", "5*KEY_VOLUP"] }
+            { "name": "Play with sound", "command": ["5*KEY_VOLDOWN", "5*KEY_VOLUP"] },
+            {
+              "name": "Do something",
+              "command": { "keys": "5*KEY_VOLDOWN", "delay": 2000 }
+            },
+            {
+              "name": "Do more of something",
+              "command": { "keys": ["KEY_1", "KEY_2"], "delay": 1000 }
+            },
+            {
+              "name": "Launch Netflix",
+              "command": [
+                { "keys": "KEY_CONTENTS", "delay": 2000 },
+                { "keys": ["3*KEY_LEFT", "KEY_ENTER"], "delay": 1000 }
+              ]
+            }
           ]
         }
       ]
@@ -81,6 +96,8 @@ The command can be:
   | :------ | :------------------------------------------------------------------------- |
   | keys | A single key with or without a multiplier, or an array of such. |
   | delay (optional) | Time (in miliseconds) to wait **after** sending **each** of the keys associated with the command to the TV. The default value is 500 ms. This option will override the one set as a switch setting.|
+
+See the `config-sample.json` for examples.
 
 ## Known limitations
 
