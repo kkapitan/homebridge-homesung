@@ -90,6 +90,8 @@ If the tool reports that it couldn't establish the connection right after the TV
 | key        | The key to be sent as a power off if hdmi-cec is disabled. The default value is KEY_POWEROFF.        |
 | addressCEC | The hdmi-cec address of the device. The default value is 0 which should work with most of the cases. |
 
+**NOTE: In order for HDMI-CEC to work, the server (e.g. rpi) must be connected to the TV via HDMI cable.**
+
 ## Switch settings
 
 | Name             | Description                                                                                                  |
@@ -115,13 +117,13 @@ See the `config-sample.json` for examples.
 
 ## Known limitations
 
-- Turning the TV on is not possible right now, though the work to enable such feature is in progress.
+- Turning the TV is possible only using HDMI-CEC technology.
 - The TV does not offer any feedback on the TV state so most of the switches are stateless.
 - As for today this plugin was not heavily tested, while the happy path scenarios might work, it can still break in more complex scenarios.
 
 ## Work in progress
 
-- Turning TV on via wol (if possible) or hdmi-cec.
+- Turning TV on via wol (if possible).
 - Better error handling
 
 ## List of available keys
