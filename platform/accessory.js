@@ -19,6 +19,12 @@ module.exports = class SamsungAccessory {
         .getCharacteristic(this.hap.Characteristic.On)
         .on("get", this._getPower.bind(this))
         .on("set", this._setPower.bind(this));
+
+      this.remote.onPowerStatusChanged(status => {
+        this.service
+          .getCharacteristic(this.hap.Characteristic.On)
+          .updateValue(status);
+      });
     } else {
       this.name = device.config.name;
       this.service = new this.hap.Service.Switch(this.name);
@@ -96,10 +102,10 @@ module.exports = class SamsungAccessory {
     try {
       const isOn = await this.remote.isTurnedOn();
       await this.remote.setPowerStatus({ status: !isOn });
+      callback(null, !isOn);
     } catch (error) {
       this.log(`Error changing TV status: ${error}`);
-    } finally {
-      callback();
+      callback(error);
     }
   }
 

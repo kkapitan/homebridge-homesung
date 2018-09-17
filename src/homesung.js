@@ -45,6 +45,12 @@ class Homesung {
     await this.power.setPowerStatus({ status: newStatus });
   }
 
+  onPowerStatusChanged(callback) {
+    this.power.onPowerStatusChanged(function(status) {
+      callback(status === PowerStatus.ON);
+    });
+  }
+
   async deviceInfo() {
     try {
       return await this.infoService.fetchInfo();
