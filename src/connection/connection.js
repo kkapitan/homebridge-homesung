@@ -1,10 +1,10 @@
-const WebSocket = require("ws");
-const { Encryption } = require("./encryption");
+const WebSocket = require('ws');
+const { Encryption } = require('./encryption');
 
 const SocketConnectionState = {
-  CONNECTED: "connected",
-  DISCONNECTED: "disconnected",
-  CONNECTING: "connecting"
+  CONNECTED: 'connected',
+  DISCONNECTED: 'disconnected',
+  CONNECTING: 'connecting',
 };
 
 class SocketConnection {
@@ -18,18 +18,16 @@ class SocketConnection {
   connect() {
     const socket = new WebSocket(this.baseUrl);
     socket.on(
-      "open",
-      function() {
+      'open',
+      () => {
         this.onStateChanged(SocketConnectionState.CONNECTING);
-      }.bind(this)
+      },
     );
 
     socket.on(
-      "message",
-      function(message) {
-        const handler = this.messageHandlers.find(el =>
-          el.shouldHandleMessage({ message })
-        );
+      'message',
+      (message) => {
+        const handler = this.messageHandlers.find(el => el.shouldHandleMessage({ message }));
 
         if (handler !== undefined) {
           const payload = handler.handleMessage({ message, socket: this });
@@ -37,30 +35,26 @@ class SocketConnection {
             this.onStateChanged(SocketConnectionState.CONNECTED, payload.DUID);
           }
         }
-      }.bind(this)
+      },
     );
 
     socket.on(
-      "close",
-      function() {
+      'close',
+      () => {
         this.onStateChanged(SocketConnectionState.DISCONNECTED);
-      }.bind(this)
+      },
     );
 
     this.socket = socket;
   }
 
   send({ topic, message }) {
-    if (
-      message !== undefined &&
-      message.name !== undefined &&
-      message.payload !== undefined
-    ) {
+    if (message !== undefined && message.name !== undefined && message.payload !== undefined) {
       const { name, payload } = message;
       const encryptedBody = this.encryption.encrypt(payload);
       const encryptedMessage = { name, args: [encryptedBody] };
 
-      this.socket.send(topic + ":" + JSON.stringify(encryptedMessage));
+      this.socket.send(`${topic}:${JSON.stringify(encryptedMessage)}`);
     } else {
       this.socket.send(topic);
     }

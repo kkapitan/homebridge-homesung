@@ -1,10 +1,30 @@
-const { PowerStatus } = require("./powerStatus");
+const { PowerStatus } = require('./powerStatus');
+
+function statusConverter(status) {
+  switch (status.args[0]) {
+    case this.cecClient.code.PowerStatus.ON:
+      return PowerStatus.ON;
+    case this.cecClient.code.PowerStatus.STANDBY:
+      return PowerStatus.STANDBY;
+    default:
+      return PowerStatus.UNKNOWN;
+  }
+}
 
 class PowerCEC {
   constructor({ config }, logger) {
-    this.cecClient = require("cec-promise");
+    /*
+     * This needs to be lazily required since the dependency assumes
+     * cec-client is installed which may not always be a case.
+     */
+
+    // eslint-disable-next-line global-require
+    this.cecClient = require('cec-promise');
+
     this.controlNibble = config.power.addressCEC;
     this.senderNibble = 14;
+
+    // eslint-disable-next-line no-bitwise
     this.addressByte = (this.senderNibble % 16 << 4) | this.controlNibble % 16;
     this.logger = logger;
   }
@@ -18,8 +38,8 @@ class PowerCEC {
     try {
       const response = await this.cecClient.request(
         this.addressByte,
-        "GIVE_DEVICE_POWER_STATUS",
-        "REPORT_POWER_STATUS"
+        'GIVE_DEVICE_POWER_STATUS',
+        'REPORT_POWER_STATUS',
       );
 
       const status = response.status ? PowerStatus.STANDBY : PowerStatus.ON;
@@ -44,29 +64,17 @@ class PowerCEC {
   }
 
   onPowerStatusChanged(callback) {
-    this.cecClient.on(
-      "REPORT_POWER_STATUS",
-      function(status) {
-        this.logger.debug(
-          `New status arrived: ${status.source}, ${status.args[0]}`
-        );
-        if (Number(status.source) === this.controlNibble) {
-          const newStatus = function() {
-            switch (status.args[0]) {
-              case this.cecClient.code.PowerStatus.ON:
-                return PowerStatus.ON;
-              case this.cecClient.code.PowerStatus.STANDBY:
-                return PowerStatus.STANDBY;
-              default:
-                return PowerStatus.UNKNOWN;
-            }
-          }.bind(this)();
+    const convertStatus = statusConverter.bind(this);
 
-          this.logger.debug(`Reporting status: ${newStatus}`);
-          callback(newStatus);
-        }
-      }.bind(this)
-    );
+    this.cecClient.on('REPORT_POWER_STATUS', (status) => {
+      this.logger.debug(`New status arrived: ${status.source}, ${status.args[0]}`);
+      if (Number(status.source) === this.controlNibble) {
+        const convertedStatus = convertStatus(status);
+
+        this.logger.debug(`Reporting status: ${convertedStatus}`);
+        callback(convertedStatus);
+      }
+    });
   }
 }
 

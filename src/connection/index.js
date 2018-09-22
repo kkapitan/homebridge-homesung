@@ -1,11 +1,11 @@
-const { SocketService } = require("./service");
-const { SocketConnection, SocketConnectionState } = require("./connection");
-const { SendKeyMessage } = require("./messages");
+const { SocketService } = require('./service');
+const { SocketConnection, SocketConnectionState } = require('./connection');
+const { SendKeyMessage } = require('./messages');
 const {
   CommandsMessageHandler,
   InitialMessageHandler,
-  KeepAliveMessageHandler
-} = require("./handlers");
+  KeepAliveMessageHandler,
+} = require('./handlers');
 
 class Connection {
   constructor({ config }, logger) {
@@ -17,34 +17,34 @@ class Connection {
   async connect({ identity }) {
     await this.socketService.startService();
     const handshake = await this.socketService.handshake();
-    const mask = handshake.split(":")[0];
+    const mask = handshake.split(':')[0];
 
     const baseUrl = this.socketUrl + mask;
 
     return new Promise(
-      function(resolve, reject) {
+      ((resolve, reject) => {
         this.socketConnection = new SocketConnection(
           { baseUrl, identity },
-          function(state, payload) {
+          ((state, payload) => {
             switch (state) {
               case SocketConnectionState.DISCONNECTED:
-                this.logger.log("DISCONNECTED");
+                this.logger.log('DISCONNECTED');
                 this.DUID = undefined;
                 this.socketConnection = undefined;
                 break;
               case SocketConnectionState.CONNECTED:
-                this.logger.log("CONNECTED");
+                this.logger.log('CONNECTED');
                 this.DUID = payload;
                 resolve();
                 break;
               case SocketConnectionState.CONNECTING:
-                this.logger.log("CONNECTING");
+                this.logger.log('CONNECTING');
                 break;
               default:
-                this.logger.log("UNKNOWN STATE");
+                this.logger.log('UNKNOWN STATE');
                 reject();
             }
-          }.bind(this)
+          }),
         );
 
         this.socketConnection.register(InitialMessageHandler(this.logger));
@@ -52,7 +52,7 @@ class Connection {
         this.socketConnection.register(CommandsMessageHandler(this.logger));
 
         this.socketConnection.connect();
-      }.bind(this)
+      }),
     );
   }
 
@@ -62,7 +62,7 @@ class Connection {
     }
 
     const message = SendKeyMessage({ key, duid: this.DUID });
-    this.socketConnection.send({ topic: "5::/com.samsung.companion", message });
+    this.socketConnection.send({ topic: '5::/com.samsung.companion', message });
   }
 
   isConnected() {

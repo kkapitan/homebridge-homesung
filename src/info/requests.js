@@ -1,10 +1,10 @@
-const InfoRequest = function() {
+function InfoRequest() {
   return {
-    url: "/ms/1.0/",
-    timeout: 5000
+    url: '/ms/1.0/',
+    timeout: 5000,
   };
-};
+}
 
 module.exports = {
-  InfoRequest
+  InfoRequest,
 };

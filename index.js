@@ -1,3 +1,5 @@
-module.exports = function(homebridge) {
-  require("./platform")(homebridge);
+const platform = require('./platform');
+
+module.exports = function init(homebridge) {
+  platform(homebridge);
 };

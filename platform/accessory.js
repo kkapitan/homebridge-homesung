@@ -1,4 +1,4 @@
-const { CommandParser } = require("./parser");
+const { CommandParser } = require('./parser');
 
 module.exports = class SamsungAccessory {
   constructor(device) {
@@ -8,22 +8,20 @@ module.exports = class SamsungAccessory {
     this.remote = device.remote;
 
     this.ip = device.config.ip;
-    this.delay = device.config["delay"] || 500;
+    this.delay = device.config.delay || 500;
 
     if (device.config.isPowerCommand === true) {
-      this.name = device.config.power.name || "Power TV";
+      this.name = device.config.power.name || 'Power TV';
       this.service = new this.hap.Service.Switch(this.name);
       this.log(`Initializing accessory ${this.name}`);
 
       this.service
         .getCharacteristic(this.hap.Characteristic.On)
-        .on("get", this._getPower.bind(this))
-        .on("set", this._setPower.bind(this));
+        .on('get', this._getPower.bind(this))
+        .on('set', this._setPower.bind(this));
 
-      this.remote.onPowerStatusChanged(status => {
-        this.service
-          .getCharacteristic(this.hap.Characteristic.On)
-          .updateValue(status);
+      this.remote.onPowerStatusChanged((status) => {
+        this.service.getCharacteristic(this.hap.Characteristic.On).updateValue(status);
       });
     } else {
       this.name = device.config.name;
@@ -35,16 +33,16 @@ module.exports = class SamsungAccessory {
 
       this.service
         .getCharacteristic(this.hap.Characteristic.On)
-        .on("get", this._getSwitch.bind(this))
-        .on("set", this._setSwitch.bind(this));
+        .on('get', this._getSwitch.bind(this))
+        .on('set', this._setSwitch.bind(this));
     }
   }
 
   getInformationService() {
     return new this.hap.Service.AccessoryInformation()
       .setCharacteristic(this.hap.Characteristic.Name, this.name)
-      .setCharacteristic(this.hap.Characteristic.Manufacturer, "Samsung TV")
-      .setCharacteristic(this.hap.Characteristic.Model, "SamsungOS")
+      .setCharacteristic(this.hap.Characteristic.Manufacturer, 'Samsung TV')
+      .setCharacteristic(this.hap.Characteristic.Model, 'SamsungOS')
       .setCharacteristic(this.hap.Characteristic.SerialNumber, this.ip);
   }
 
@@ -66,21 +64,15 @@ module.exports = class SamsungAccessory {
       }
 
       setTimeout(
-        () =>
-          this.service
-            .getCharacteristic(this.hap.Characteristic.On)
-            .updateValue(false),
-        100
+        () => this.service.getCharacteristic(this.hap.Characteristic.On).updateValue(false),
+        100,
       );
     } catch (error) {
       this.log(`Error sending key: ${error}`);
 
       setTimeout(
-        () =>
-          this.service
-            .getCharacteristic(this.hap.Characteristic.On)
-            .updateValue(false),
-        100
+        () => this.service.getCharacteristic(this.hap.Characteristic.On).updateValue(false),
+        100,
       );
     } finally {
       callback();
@@ -90,7 +82,7 @@ module.exports = class SamsungAccessory {
   async _getPower(callback) {
     try {
       const isOn = await this.remote.isTurnedOn();
-      this.log(`TV status: ${isOn ? "on" : "standby"}`);
+      this.log(`TV status: ${isOn ? 'on' : 'standby'}`);
       callback(null, isOn);
     } catch (error) {
       this.log(`Unable to determine TV status: ${isOn}`);
@@ -110,7 +102,7 @@ module.exports = class SamsungAccessory {
   }
 
   _wait(ms) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (ms <= 0) {
         resolve();
       } else {

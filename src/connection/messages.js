@@ -1,43 +1,43 @@
-const PushMessage = function({ plugin }) {
+function PushMessage({ plugin }) {
   return {
-    name: "registerPush",
+    name: 'registerPush',
     payload: {
-      eventType: "EMP",
-      plugin: plugin
-    }
+      eventType: 'EMP',
+      plugin,
+    },
   };
-};
+}
 
-const GetDUIDMessage = function() {
+function GetDUIDMessage() {
   return {
-    name: "callCommon",
+    name: 'callCommon',
     payload: {
-      method: "POST",
+      method: 'POST',
       body: {
-        plugin: "NNavi",
-        api: "GetDUID",
-        version: "1.000"
-      }
-    }
+        plugin: 'NNavi',
+        api: 'GetDUID',
+        version: '1.000',
+      },
+    },
   };
-};
+}
 
-const SendKeyMessage = function({ key, duid }) {
+function SendKeyMessage({ key, duid }) {
   return {
-    name: "callCommon",
+    name: 'callCommon',
     payload: {
-      method: "POST",
+      method: 'POST',
       body: {
-        plugin: "RemoteControl",
-        version: "1.000",
-        api: "SendRemoteKey",
+        plugin: 'RemoteControl',
+        version: '1.000',
+        api: 'SendRemoteKey',
         param1: duid,
-        param2: "Click",
+        param2: 'Click',
         param3: key,
-        param4: "false"
-      }
-    }
+        param4: 'false',
+      },
+    },
   };
-};
+}
 
 module.exports = { SendKeyMessage, GetDUIDMessage, PushMessage };

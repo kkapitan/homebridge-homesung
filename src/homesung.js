@@ -1,43 +1,42 @@
-const { Pairing } = require("./pairing");
-const { Connection } = require("./connection");
-const { InfoService } = require("./info");
-const { PowerCEC, PowerWiFi, PowerStatus } = require("./power");
+const { Pairing } = require('./pairing');
+const { Connection } = require('./connection');
+const { InfoService } = require('./info');
+const { PowerCEC, PowerWiFi, PowerStatus } = require('./power');
 
 class Homesung {
-  constructor(
-    { config },
-    logger = { error: console.error, log: console.log, debug: console.log }
-  ) {
-    this.pairing = new Pairing({ config }, logger);
-    this.connection = new Connection({ config }, logger);
-
-    this.identity = config.identity;
-    this.logger = logger;
-    this.infoService = new InfoService({ config });
-
-    config.power = {
+  // eslint-disable-next-line no-console
+  constructor({ config }, logger = { error: console.error, log: console.log, debug: console.log }) {
+    const defaultPowerConfig = {
       enableCEC: false,
-      key: "KEY_POWEROFF",
+      key: 'KEY_POWEROFF',
       addressCEC: 0,
-      ...config.power
     };
 
-    if (config.power.enableCEC === true) {
-      this.power = new PowerCEC({ config }, logger);
+    const configuration = { power: defaultPowerConfig, ...config };
+
+    this.pairing = new Pairing({ config: configuration }, logger);
+    this.connection = new Connection({ config: configuration }, logger);
+
+    this.identity = configuration.identity;
+    this.logger = logger;
+    this.infoService = new InfoService({ config: configuration });
+
+    if (configuration.power.enableCEC === true) {
+      this.power = new PowerCEC({ config: configuration }, logger);
     } else {
       this.power = new PowerWiFi(
         {
-          config,
+          config: configuration,
           infoService: this.infoService,
-          keySender: this.sendKey.bind(this)
+          keySender: this.sendKey.bind(this),
         },
-        logger
+        logger,
       );
     }
   }
 
   async isTurnedOn() {
-    return await this.power.isTurnedOn();
+    return this.power.isTurnedOn();
   }
 
   async setPowerStatus({ status }) {
@@ -46,7 +45,7 @@ class Homesung {
   }
 
   onPowerStatusChanged(callback) {
-    this.power.onPowerStatusChanged(function(status) {
+    this.power.onPowerStatusChanged((status) => {
       callback(status === PowerStatus.ON);
     });
   }
@@ -74,7 +73,7 @@ class Homesung {
       if (this.identity !== undefined) {
         await this.connection.sendKey({ key, identity: this.identity });
       } else {
-        throw new Error("You need to pair with your device first");
+        throw new Error('You need to pair with your device first');
       }
     } catch (error) {
       throw new Error(`Unable to send the key: ${error.message}`);

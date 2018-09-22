@@ -1,53 +1,51 @@
-const { PushMessage, GetDUIDMessage } = require("./messages");
+const { PushMessage, GetDUIDMessage } = require('./messages');
 
-const InitialMessageHandler = function(logger) {
+function InitialMessageHandler(logger) {
   return {
-    shouldHandleMessage: function({ message }) {
-      return message === "1::";
+    shouldHandleMessage({ message }) {
+      return message === '1::';
     },
-    handleMessage: function({ message, socket }) {
-      logger.debug(`Handling initial message`);
+    handleMessage({ message, socket }) {
+      logger.debug('Handling initial message');
 
-      socket.send({ topic: "1::/com.samsung.companion" });
+      socket.send({ topic: '1::/com.samsung.companion' });
 
       socket.send({
-        topic: "5::/com.samsung.companion",
-        message: PushMessage({ plugin: "SecondTV" })
+        topic: '5::/com.samsung.companion',
+        message: PushMessage({ plugin: 'SecondTV' }),
       });
       socket.send({
-        topic: "5::/com.samsung.companion",
-        message: PushMessage({ plugin: "RemoteControl" })
+        topic: '5::/com.samsung.companion',
+        message: PushMessage({ plugin: 'RemoteControl' }),
       });
       socket.send({
-        topic: "5::/com.samsung.companion",
-        message: GetDUIDMessage()
+        topic: '5::/com.samsung.companion',
+        message: GetDUIDMessage(),
       });
-    }
+    },
   };
-};
+}
 
-const KeepAliveMessageHandler = function(logger) {
+function KeepAliveMessageHandler(logger) {
   return {
-    shouldHandleMessage: function({ message }) {
-      return message === "2::";
+    shouldHandleMessage({ message }) {
+      return message === '2::';
     },
-    handleMessage: function({ message, socket }) {
-      logger.debug(`Handling keep alive`);
+    handleMessage({ message, socket }) {
+      logger.debug('Handling keep alive');
 
-      socket.send({ topic: "2::" });
-    }
+      socket.send({ topic: '2::' });
+    },
   };
-};
+}
 
-const CommandsMessageHandler = function(logger) {
+function CommandsMessageHandler(logger) {
   return {
-    shouldHandleMessage: function({ message }) {
-      return message.startsWith("5::/com.samsung.companion:");
+    shouldHandleMessage({ message }) {
+      return message.startsWith('5::/com.samsung.companion:');
     },
-    handleMessage: function({ message, socket }) {
-      const payload = JSON.parse(
-        message.slice("5::/com.samsung.companion:".length)
-      );
+    handleMessage({ message, socket }) {
+      const payload = JSON.parse(message.slice('5::/com.samsung.companion:'.length));
 
       logger.debug(`Handling message: ${message}`);
 
@@ -55,18 +53,19 @@ const CommandsMessageHandler = function(logger) {
       logger.debug(`Decrypted message: ${JSON.stringify(decrypted)}`);
 
       if (
-        payload.name === "receiveCommon" &&
-        decrypted.plugin === "NNavi" &&
-        decrypted.api === "GetDUID"
+        payload.name === 'receiveCommon'
+        && decrypted.plugin === 'NNavi'
+        && decrypted.api === 'GetDUID'
       ) {
         return { DUID: decrypted.result };
       }
-    }
+      return undefined;
+    },
   };
-};
+}
 
 module.exports = {
   CommandsMessageHandler,
   KeepAliveMessageHandler,
-  InitialMessageHandler
+  InitialMessageHandler,
 };

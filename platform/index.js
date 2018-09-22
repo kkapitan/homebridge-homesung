@@ -1,30 +1,23 @@
 let Hap;
-const SamsungDevice = require("./device");
-
-module.exports = homebridge => {
-  Hap = homebridge.hap;
-
-  homebridge.registerPlatform(
-    "homebridge-homesung",
-    "SamsungTV",
-    SamsungPlatform
-  );
-};
+const SamsungDevice = require('./device');
 
 class SamsungPlatform {
   constructor(log, config) {
     this.log = log;
-    this.devices = config["devices"] || [];
+    this.devices = config.devices || [];
   }
 
   accessories(callback) {
-    let accessoryList = [];
-
-    for (let device of this.devices) {
-      device = new SamsungDevice(this.log, Hap, device);
-      accessoryList = [...accessoryList, ...device.accessories];
-    }
+    const accessoryList = this.devices
+      .map(device => new SamsungDevice(this.log, Hap, device))
+      .reduce((accessories, device) => [...accessories, ...device.accessories], []);
 
     callback(accessoryList);
   }
 }
+
+module.exports = (homebridge) => {
+  Hap = homebridge.hap;
+
+  homebridge.registerPlatform('homebridge-homesung', 'SamsungTV', SamsungPlatform);
+};

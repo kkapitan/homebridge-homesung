@@ -1,31 +1,31 @@
-const encryptor = require("../../vendor/encryption");
+const encryptor = require('../../vendor/encryption');
 
 class PairingProtocol {
-  generateServerHello({ userId, pin }) {
+  static generateServerHello({ userId, pin }) {
     return encryptor.generateServerHello(userId, pin);
   }
 
-  generateServerAck() {
+  static generateServerAck() {
     return encryptor.generateServerAcknowledge();
   }
 
-  validateHelloData({ data }) {
+  static validateHelloData({ data }) {
     if (encryptor.parseClientHello(data.GeneratorClientHello) !== 0) {
-      throw Error("Invalid PIN");
+      throw Error('Invalid PIN');
     }
 
     return data.request_id;
   }
 
-  validateAckData({ data }) {
+  static validateAckData({ data }) {
     if (!encryptor.parseClientHello(data.ClientAckMsg)) {
-      throw Error("Failed to acknowledge client");
+      throw Error('Failed to acknowledge client');
     }
 
     return data;
   }
 
-  getKey() {
+  static getKey() {
     return encryptor.getKey();
   }
 }

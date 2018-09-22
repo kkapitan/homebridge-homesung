@@ -1,10 +1,9 @@
-const { PairingService } = require("./service");
-const { PairingProtocol } = require("./protocol");
+const { PairingService } = require('./service');
+const { PairingProtocol } = require('./protocol');
 
 class Pairing {
   constructor({ config }, logger) {
     this.pairingService = new PairingService({ config });
-    this.pairingProtocol = new PairingProtocol();
     this.logger = logger;
   }
 
@@ -14,52 +13,46 @@ class Pairing {
   }
 
   async confirmPin({ pin }) {
-    const config = this.pairingService.config;
+    const { config } = this.pairingService;
 
-    this.logger.log(
-      `Confirming pin with config: ${JSON.stringify(config)} and pin: ${pin}`
-    );
+    this.logger.log(`Confirming pin with config: ${JSON.stringify(config)} and pin: ${pin}`);
 
-    const serverHello = this.pairingProtocol.generateServerHello({
+    const serverHello = PairingProtocol.generateServerHello({
       userId: config.userId,
-      pin
+      pin,
     });
 
     this.logger.log(`Sending server hello ${serverHello}`);
 
     const helloData = await this.pairingService.sendServerHello({
-      serverHello
+      serverHello,
     });
 
     this.logger.log(`Received server hello ${helloData}`);
 
     const parsedHelloData = JSON.parse(helloData);
 
-    this.logger.log(
-      `Parsing server hello auth data ${parsedHelloData.auth_data}`
-    );
+    this.logger.log(`Parsing server hello auth data ${parsedHelloData.auth_data}`);
 
     const parsedHelloAuthData = JSON.parse(parsedHelloData.auth_data);
 
     this.logger.log(
-      `Validating server hello auth data ${
-        parsedHelloAuthData.GeneratorClientHello
-      }`
+      `Validating server hello auth data ${parsedHelloAuthData.GeneratorClientHello}`,
     );
 
-    const requestId = this.pairingProtocol.validateHelloData({
-      data: parsedHelloAuthData
+    const requestId = PairingProtocol.validateHelloData({
+      data: parsedHelloAuthData,
     });
 
     this.logger.log(`Obtained requestId ${requestId}`);
 
-    const serverAck = this.pairingProtocol.generateServerAck();
+    const serverAck = PairingProtocol.generateServerAck();
 
     this.logger.log(`Sending server acknowledge ${serverAck}`);
 
     const ackData = await this.pairingService.sendServerAck({
       serverAck,
-      requestId
+      requestId,
     });
 
     this.logger.log(`Received client acknowledge ${ackData}`);
@@ -70,18 +63,16 @@ class Pairing {
 
     const parsedAckAuthData = JSON.parse(parsedAckData.auth_data);
 
-    this.logger.log(
-      `Validating acknowledge auth data ${parsedAckAuthData.ClientAckMsg}`
-    );
+    this.logger.log(`Validating acknowledge auth data ${parsedAckAuthData.ClientAckMsg}`);
 
-    this.pairingProtocol.validateAckData({
-      data: parsedAckAuthData
+    PairingProtocol.validateAckData({
+      data: parsedAckAuthData,
     });
     await this.pairingService.hidePin();
 
     return {
       sessionId: parsedAckAuthData.session_id,
-      aesKey: this.pairingProtocol.getKey()
+      aesKey: PairingProtocol.getKey(),
     };
   }
 }

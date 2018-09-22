@@ -1,10 +1,11 @@
 #!/usr/bin/env node
- 
- 'use strict';
- process.title = 'homebridge-homesung';
- // Find the homebridge-homesung lib
-var path = require('path');
-var fs = require('fs');
-var src = path.join(path.dirname(fs.realpathSync(__filename)), '..');
- // Run pairing
-require(src + '/request-identity')(); 
+process.title = 'homebridge-homesung';
+// Find the homebridge-homesung lib
+const path = require('path');
+const fs = require('fs');
+
+const src = path.join(path.dirname(fs.realpathSync(__filename)), '..');
+
+// Run pairing
+// eslint-disable-next-line
+require(`${src}/request-identity`)();

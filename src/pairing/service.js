@@ -1,24 +1,11 @@
-const request = require("request");
+const fetch = require('../http/fetch');
 const {
   PinRequest,
   StartPairingRequest,
   SendServerAckRequest,
   SendServerHelloRequest,
-  HidePinRequest
-} = require("./requests");
-
-const performRequest = async function(req, baseUrl) {
-  return new Promise(function(resolve, reject) {
-    req.baseUrl = baseUrl;
-    request(req, function(err, response, body) {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(body);
-    });
-  });
-};
+  HidePinRequest,
+} = require('./requests');
 
 class PairingService {
   constructor({ config }) {
@@ -28,36 +15,36 @@ class PairingService {
 
   async requestPin() {
     const req = PinRequest();
-    return await performRequest(req, this.baseUrl);
+    return fetch(req, this.baseUrl);
   }
 
   async startPairing() {
     const req = StartPairingRequest({
-      config: this.config
+      config: this.config,
     });
-    return await performRequest(req, this.baseUrl);
+    return fetch(req, this.baseUrl);
   }
 
   async sendServerHello({ serverHello }) {
     const req = SendServerHelloRequest({
       config: this.config,
-      serverHello
+      serverHello,
     });
-    return await performRequest(req, this.baseUrl);
+    return fetch(req, this.baseUrl);
   }
 
   async sendServerAck({ serverAck, requestId }) {
     const req = SendServerAckRequest({
       config: this.config,
       requestId,
-      serverAck
+      serverAck,
     });
-    return await performRequest(req, this.baseUrl);
+    return fetch(req, this.baseUrl);
   }
 
   async hidePin() {
     const req = HidePinRequest();
-    return await performRequest(req, this.baseUrl);
+    return fetch(req, this.baseUrl);
   }
 }
 

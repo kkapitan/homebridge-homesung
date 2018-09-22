@@ -1,4 +1,4 @@
-const { PowerStatus } = require("./powerStatus");
+const { PowerStatus } = require('./powerStatus');
 
 class PowerWiFi {
   constructor({ config, keySender, infoService }, logger) {
@@ -13,10 +13,10 @@ class PowerWiFi {
   }
 
   async currentPowerStatus() {
-    this.logger.debug(`Requesting device status`);
+    this.logger.debug('Requesting device status');
     try {
       await this.infoService.fetchInfo();
-      this.logger.debug(`Requesting device status succeded: on`);
+      this.logger.debug('Requesting device status succeded: on');
       return PowerStatus.ON;
     } catch (error) {
       this.logger.debug(`Requesting device status failed: ${error.message}`);
@@ -35,7 +35,7 @@ class PowerWiFi {
       this.logger.debug(`Setting device to: ${status}`);
       await this.keySender({ key: this.key });
     } else {
-      this.logger.error(`Power via WIFI does not support powering on`);
+      this.logger.error('Power via WIFI does not support powering on');
     }
   }
 

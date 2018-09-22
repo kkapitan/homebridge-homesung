@@ -1,18 +1,5 @@
-const request = require("request");
-const { InfoRequest } = require("./requests");
-
-const performRequest = async function(req, baseUrl) {
-  return new Promise(function(resolve, reject) {
-    req.baseUrl = baseUrl;
-    request(req, function(err, response, body) {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(body);
-    });
-  });
-};
+const { InfoRequest } = require('./requests');
+const fetch = require('../http/fetch');
 
 class InfoService {
   constructor({ config }) {
@@ -21,7 +8,7 @@ class InfoService {
 
   async fetchInfo() {
     const req = InfoRequest();
-    return await performRequest(req, this.baseUrl);
+    await fetch(req, this.baseUrl);
   }
 }
 

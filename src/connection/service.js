@@ -1,18 +1,5 @@
-const request = require("request");
-const { HandshakeRequest, StartServiceRequest } = require("./requests");
-
-const performRequest = async function(req, baseUrl) {
-  return new Promise(function(resolve, reject) {
-    req.baseUrl = baseUrl;
-    request(req, function(err, response, body) {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(body);
-    });
-  });
-};
+const fetch = require('../http/fetch');
+const { HandshakeRequest, StartServiceRequest } = require('./requests');
 
 class SocketService {
   constructor({ config }) {
@@ -21,12 +8,12 @@ class SocketService {
 
   async handshake() {
     const req = HandshakeRequest();
-    return await performRequest(req, this.baseUrl);
+    return fetch(req, this.baseUrl);
   }
 
   async startService() {
     const req = StartServiceRequest();
-    return await performRequest(req, this.baseUrl);
+    return fetch(req, this.baseUrl);
   }
 }
 
