@@ -1,3 +1,5 @@
+This is a fork of [kkapitan](https://github.com/kkapitan/homebridge-homesung), he doesn't seem to support this package anymore.
+
 **NOTE: This plugin is in WIP state. While it should work in simple cases, there are still some work in progress to make it more stable.**
 
 ---
