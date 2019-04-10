@@ -12,7 +12,7 @@ module.exports = class SamsungAccessory {
 
     if (device.config.isPowerCommand === true) {
       this.name = device.config.power.name || 'Power TV';
-      this.service = new this.hap.Service.Switch(this.name);
+      this.service = new this.hap.Service.Television(this.name);
       this.log(`Initializing accessory ${this.name}`);
 
       this.service
@@ -25,7 +25,7 @@ module.exports = class SamsungAccessory {
       });
     } else {
       this.name = device.config.name;
-      this.service = new this.hap.Service.Switch(this.name);
+      this.service = new this.hap.Service.Television(this.name);
       this.log(`Initializing accessory ${this.name}`);
 
       this.originalCommand = device.config.command;
