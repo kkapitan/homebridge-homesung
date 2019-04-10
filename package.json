@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dariusrosendahl/homebridge-homesung.git"
+    "url": "https://github.com/dariusrosendahl/homebridge-homesung-tv.git"
   },
   "keywords": [
     "homebridge",
@@ -20,10 +20,10 @@
     "smart tv"
   ],
   "author": {
-      "name" : "Darius Rosendahl",
-      "email" : "darius@doordarius.nl",
-      "url" : "https://www.doordarius.nl"
-    },
+    "name": "Darius Rosendahl",
+    "email": "darius@doordarius.nl",
+    "url": "https://www.doordarius.nl"
+  },
   "license": "MIT",
   "dependencies": {
     "@types/node": "^10.9.4",
@@ -34,7 +34,7 @@
     "ws": "^6.0.0"
   },
   "bin": {
-    "homesung-pair": "bin/pair"
+    "homesung-tv-pair": "bin/pair"
   },
   "engines": {
     "node": ">=8.6.0",

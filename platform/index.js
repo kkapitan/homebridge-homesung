@@ -19,5 +19,5 @@ class SamsungPlatform {
 module.exports = (homebridge) => {
   Hap = homebridge.hap;
 
-  homebridge.registerPlatform('homebridge-homesung', 'SamsungTV', SamsungPlatform);
+  homebridge.registerPlatform('homebridge-homesung-tv', 'SamsungTV', SamsungPlatform);
 };

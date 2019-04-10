@@ -4,7 +4,7 @@ This is a fork of [kkapitan](https://github.com/kkapitan/homebridge-homesung), h
 
 ---
 
-# homebridge-homesung
+# homebridge-homesung-tv
 
 A [homebridge](https://github.com/nfarina/homebridge) plugin that allows you to control the Samsung Smart TV H and J series with HomeKit and Siri.
 
@@ -13,7 +13,7 @@ This plugin was made because the available ones offer the support for only the n
 ## Installation
 
 - Install homebridge - refer to their [README](https://github.com/nfarina/homebridge/blob/master/README.md) for further instructions.
-- Install the plugin using: `npm install -g --unsafe-perm homebridge-homesung`
+- Install the plugin using: `npm install -g --unsafe-perm homebridge-homesung-tv`
 - Update your configuration file - see the `config-sample.json` for reference.
 
 ## Configuration
@@ -68,7 +68,7 @@ This plugin was made because the available ones offer the support for only the n
 
 ## Pairing
 
-In order to obtain configuration info such as `identity` turn on the TV and run `homesung-pair <ip of the device>` from terminal.
+In order to obtain configuration info such as `identity` turn on the TV and run `homesung-tv-pair <ip of the device>` from terminal.
 The pairing code should be displayed on the TV screen. After typing the correct pin code in the terminal, all the required info should be printed.
 
 If the tool reports that it couldn't establish the connection right after the TV was turned on, try waiting a couple of minutes till the networking interface of the device will be ready to accept http calls.

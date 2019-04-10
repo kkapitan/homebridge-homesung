@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-process.title = 'homebridge-homesung';
-// Find the homebridge-homesung lib
+process.title = 'homebridge-homesung-tv';
+// Find the homebridge-homesung-tv lib
 const path = require('path');
 const fs = require('fs');
 
