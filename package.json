@@ -27,7 +27,7 @@
     "@types/ws": "^6.0.0",
     "cec-promise": "^0.2.0",
     "request": "^2.88.0",
-    "ws": "^6.0.0"
+    "ws": "^7.4.5"
   },
   "bin": {
     "homesung-pair": "bin/pair"
